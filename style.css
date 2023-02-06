@@ -22,6 +22,15 @@ html, body {
   width: 100%;
 }
 
+/*Clase para posición de coordenadas*/
+.coordinate_display {
+  position: absolute;
+  right: 7px;
+  bottom: 25px;
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(148, 86, 16);
+}
 
 .header-nav {
   overflow: hidden;
@@ -88,12 +97,5 @@ html, body {
   content: "✖";
 }
 
-/*Clase para posición de coordenadas*/
-.coordinate_display {
-  bottom: 20px;
-  right: 8px;
-  position: absolute;
-  color: blue;
-  font-weight: bold;
-}
+
 
