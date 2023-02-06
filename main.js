@@ -6,6 +6,8 @@ import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 
 import GeoJSON from "ol/format/GeoJSON";
 
+import {format} from "ol/coordinate";
+
 import Overlay from "ol/Overlay";
 
 import "ol-layerswitcher/dist/ol-layerswitcher.css";
@@ -28,6 +30,7 @@ import {
   OverviewMap,
   FullScreen,
   defaults as defaultControls,
+  MousePosition,
 } from "ol/control";
 
 import LayerGroup from 'ol/layer/Group';
@@ -69,6 +72,14 @@ const zoomToCorunaControl = new ZoomToExtent({
   extent: coruna_extent,
 });
 
+//Mouse position control
+const mousePositionControl = new MousePosition({
+  coordinateFormat: (coordinate) => {
+    return format(coordinate, "Lat: {y}, Long: {x}", 4);
+  },
+  projection: "EPSG:4326",
+  className: "coordinate_display",
+});
 
 //Variable con los controles que vamos a cargar
 const extendControls = [

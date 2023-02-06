@@ -88,5 +88,12 @@ html, body {
   content: "✖";
 }
 
-
+/*Clase para posición de coordenadas*/
+.coordinate_display {
+  bottom: 20px;
+  right: 8px;
+  position: absolute;
+  color: blue;
+  font-weight: bold;
+}
 
