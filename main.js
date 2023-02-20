@@ -120,80 +120,12 @@ const MTN50Layer = new TileLayer({
 });
 
 
-
-const caminosStyle = (feature) => {
-  let agrupacion = feature.get("agrupacion");
-
-  let colorAgrupacion;
-
-  switch (agrupacion) {
-    case 'Camino Francés':
-      colorAgrupacion = 'yellow';
-      break;
-    case 'Caminos Andaluces':
-      colorAgrupacion = 'green';
-      break;
-    case 'Caminos Catalanes':
-      colorAgrupacion = 'blue';
-      break;
-    case 'Caminos de Galicia':
-      colorAgrupacion = 'dark pink';
-      break;
-    case 'Caminos del Norte':
-      colorAgrupacion = 'fuchsia';
-      break;
-    case 'Caminos del Centro':
-      colorAgrupacion = 'orange';
-      break;
-    case 'Caminos del Este':
-      colorAgrupacion = 'gray';
-      break;
-    case 'Caminos del Sureste':
-      colorAgrupacion = 'red';
-      break;
-    case 'Caminos Insulares':
-      colorAgrupacion = 'cyan';
-      break;
-    case 'Caminos Portugueses':
-      colorAgrupacion = 'brown';
-      break;
-    case 'Chemins vers Via des Piemonts':
-      colorAgrupacion = 'maroon';
-      break;
-    case 'Chemins vers Via Turonensis':
-      colorAgrupacion = '#1f6b75';
-      break;
-    case 'Voie des Piemonts':
-      colorAgrupacion = 'dark green';
-      break;
-    case 'Voie Turonensis - Paris':
-      colorAgrupacion = '#78b90f';
-      break;
-    case 'Via Tolosana Arles':
-      colorAgrupacion = 'dark green';
-      break;
-
-
-  }
-
-  return new Style({
-    stroke: new Stroke({
-      color: colorAgrupacion,
-      width: 2
-    })
-  });
-  
-}
-
 const caminos_santiago = new VectorLayer({
-  title: "Caminos de Santiago",
+  title: "Cauces",
   visible: true,
-  style: function (feature) {
-    return caminosStyle(feature);
-  },
   source: new VectorSource({
     format: new GeoJSON(),
-    url: "./data/caminos_santiago.geojson",
+    url: "./data/cauces.geojson",
   }),
 });
 
@@ -235,8 +167,6 @@ const overlay = new Overlay({
 });
 
 
-
-
 //---Variable Map---
 const map = new Map({
   target: 'map',
@@ -261,12 +191,14 @@ const map = new Map({
 //Evento apertura popup
 map.on("singleclick", function (evt) {
   let info = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
-    let nombre = feature.get("nombre");
-    let longitud = feature.get("longitud");
-    let url_info = feature.get("url_info");
-    let agrupacion = feature.get("agrupacion");
-    let pais = feature.get("pais");
-    let data = [nombre, longitud, url_info, agrupacion, pais];
+    let nombre = feature.get("Barranco");
+    let nombre2 = feature.get("OtrosTopon");
+    let longitud = feature.get("Longitud");
+    let xini = feature.get("Xini");
+    let yini = feature.get("Yini");
+    let xfin = feature.get("Xfin");
+    let yfin = feature.get("Yfin");
+    let data = [nombre, nombre2, longitud, xini, yini, xfin, yfin];
     return data;
   });
   if (info) {
@@ -274,11 +206,13 @@ map.on("singleclick", function (evt) {
     const coordinate = evt.coordinate;
     // Añadimos el contenido al HTML
     content.innerHTML = `<h3>Información</h3>
-                          <p><b>Nombre</b>: ${info[0]} </p>
-                          <p><b>Longitud</b>: ${info[1]} Km.</p>
-                          <p><b>URL</b>: ${info[2]} </p>
-                          <p><b>Agrupación</b>: ${info[3]} </p>
-                          <p><b>País</b>: ${info[4]} </p>`;
+                          <p><b>Barranco</b>: ${info[0]} </p>
+                          <p><b>Otros topónimos</b> ${info[1]}
+                          <p><b>Longitud</b>: ${info[2]} m.</p>
+                          <p><b>X inicial</b>: ${info[3]} </p>
+                          <p><b>Y inicial</b>: ${info[4]} </p>
+                          <p><b>X final</b>: ${info[5]} </p>
+                          <p><b>Y final</b>: ${info[6]} </p>`;
     // Presenta la ventana en las coordenadas
     overlay.setPosition(coordinate);
   } else {
@@ -295,8 +229,9 @@ map.on("pointermove", function (evt) {
 
 
 //---Layerswitcher---
-const layerSwitcher = new LayerSwitcher({
+const layerSwitcher = new ol.control.LayerSwitcherLayerSwitcher({
   tipLabel: "Leyenda",
+  groupSelectStyle: 'children'
 });
 
 map.addControl(layerSwitcher);
