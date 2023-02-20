@@ -7,7 +7,7 @@ import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 
 import "ol-layerswitcher/dist/ol-layerswitcher.css";
-import LayerSwitcher from "ol-layerswitcher";
+import LayerSwitcher from "ol-layerswitcher/dist/ol-layerswitcher.js";
 
 import {
   Text,
@@ -226,13 +226,9 @@ map.on("pointermove", function (evt) {
     : "";
 });
 
-
-
 //---Layerswitcher---
-const layerSwitcher = new ol.control.LayerSwitcherLayerSwitcher({
-  tipLabel: "Leyenda",
-  groupSelectStyle: 'children'
+const layerSwitcher = new LayerSwitcher({
+  tipLabel: 'Leyenda',
 });
 
 map.addControl(layerSwitcher);
-
