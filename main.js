@@ -106,6 +106,16 @@ const ortoPNOALayer = new TileLayer({
   type: "base",
 });
 
+//Ortofoto GRAFCAN
+const ortoExpress = new TileLayer({
+  title: "OrtoExpress",
+  visible: false,
+  source: new TileWMS({
+    url: "https://idecan1.grafcan.es/ServicioWMS/OrtoExpress?",
+    params: { 'LAYERS': "WMS_OrtoExpress", TILED: true },
+  }),
+  type: "base",
+});
 
 //Capa MTN50
 const MTN50Layer = new TileLayer({
@@ -133,7 +143,7 @@ const caminos_santiago = new VectorLayer({
 //---Grupos de capas (Layerswitcher)---
 const baseMaps_layers = new LayerGroup({
   title: "Mapas base",
-  layers: [osmLayer, ortoPNOALayer, MTN50Layer],
+  layers: [osmLayer, ortoPNOALayer, ortoExpress, MTN50Layer],
 });
 
 const overlays_layers = new LayerGroup({
@@ -232,3 +242,5 @@ const layerSwitcher = new LayerSwitcher({
 });
 
 map.addControl(layerSwitcher);
+
+console.log(35);
